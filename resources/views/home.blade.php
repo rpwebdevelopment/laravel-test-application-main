@@ -14,7 +14,14 @@
                         </div>
                     @endif
 
-                    <a href="{{ route('note.list') }}">{{ __('View Notes') }}</a>
+                    <div class="col-md-12">
+                        <a href="{{ route('note.list') }}">{{ __('View Notes') }}</a>
+                    </div>
+
+                    <div class="col-md-12 pt-2">
+                        <a href="{{ route('category.list') }}">{{ __('View Categories') }}</a>
+                    </div>
+
                 </div>
             </div>
         </div>
