@@ -34,7 +34,8 @@ Route::group([
         Route::get('/', [NoteController::class, 'overview'])->name('list');
         Route::get('/create', [NoteController::class, 'create'])->name('create');
         Route::get('/{note_id}', [NoteController::class, 'view'])->name('view');
-        Route::post('/{note_id?}', [NoteController::class, 'store'])->name('store');
+        Route::post('/', [NoteController::class, 'store'])->name('store');
+        Route::post('/{note_id}', [NoteController::class, 'update'])->name('update');
     });
 
     Route::group([

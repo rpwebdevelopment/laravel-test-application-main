@@ -10,7 +10,8 @@ class NoteRequest extends FormRequest
     {
         return [
             'title'         => ['required', 'string'],
-            'content'       => ['nullable', 'string']
+            'content'       => ['nullable', 'string'],
+            'categories'    => ['nullable', 'array'],
         ];
     }
 }
