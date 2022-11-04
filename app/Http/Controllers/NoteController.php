@@ -22,10 +22,11 @@ class NoteController extends Controller
 
     public function create()
     {
-        $categories = $this->getCategoriesArray(Auth::user());
         return view(
             'note.form',
-            compact('categories')
+            [
+                'categories' => $this->getCategoriesArray(Auth::user()),
+            ]
         );
     }
 
