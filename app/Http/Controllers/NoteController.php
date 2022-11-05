@@ -87,7 +87,7 @@ class NoteController extends Controller
     }
 
     /**
-     * @return array $formatted
+     * @return array
      */
     private function getCategoriesArray(User $user, ?Note $note = null)
     {
