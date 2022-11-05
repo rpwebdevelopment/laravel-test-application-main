@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 /**
+ * @property int $id
+ * @property int $user_id
+ * @property string $title
+ * @property string $content
  * @property Collection $categories
  * @property Collection $noteCategories
  */

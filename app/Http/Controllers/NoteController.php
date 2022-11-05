@@ -92,10 +92,10 @@ class NoteController extends Controller
     private function getCategoriesArray(User $user, ?Note $note = null)
     {
         $lazyCollection = $user->categories()->cursor();
-        $selected = $note->categories;
+        $selected = $note ? $note->categories : collect([]);
 
         return $lazyCollection->map(
-            function ($category) use ($selected) {
+            function (Category $category) use ($selected) {
                 return [
                     'id' => $category->id,
                     'name' => $category->name,
