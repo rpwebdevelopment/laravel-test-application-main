@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NoteRequest;
+use App\Models\Category;
 use App\Models\Note;
 use App\Models\NoteCategory;
 use App\Models\User;
@@ -90,18 +91,18 @@ class NoteController extends Controller
      */
     private function getCategoriesArray(User $user, ?Note $note = null)
     {
-        $categories = $user->categories->pluck(['name'], 'id');
-        $selected = $note ? $note->categories->pluck('id')->toArray() : [];
+        $lazyCollection = $user->categories()->cursor();
+        $selected = $note->categories;
 
-        $formatted = [];
-        foreach ($categories as $id => $name) {
-            $formatted[$id] = [
-                'name' => $name,
-                'selected' => in_array($id, $selected),
-            ];
-        }
-
-        return $formatted;
+        return $lazyCollection->map(
+            function ($category) use ($selected) {
+                return [
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'selected' => $selected->where('id', $category->id)->isNotEmpty(),
+                ];
+            }
+        )->toArray();
     }
 
     private function associateCategories(array $categories, int $note_id)

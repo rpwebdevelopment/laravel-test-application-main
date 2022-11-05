@@ -33,12 +33,12 @@
                             <textarea name="content" id="content" rows="10" class="form-control @error('content') is-invalid @enderror" id="content">{{ isset($note) ? $note->content : '' }}</textarea>
                         </div>
 
-                        @foreach($categories as $id => $category)
+                        @foreach($categories as $category)
                             <div class="form-group">
-                                <label for="categories[{{ $id }}]">{{ $category['name'] }}</label>
+                                <label for="categories[{{ $category['id'] }}]">{{ $category['name'] }}</label>
                                 <input
                                     type="checkbox"
-                                    name="categories[{{ $id }}]"
+                                    name="categories[{{ $category['id'] }}]"
                                     value="1"
                                     @if($category['selected'])
                                         checked="checked"
