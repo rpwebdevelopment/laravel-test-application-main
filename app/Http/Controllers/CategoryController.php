@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
-    public function overview()
+    public function overview(): View
     {
         return view(
             'category.list',
@@ -18,12 +20,12 @@ class CategoryController extends Controller
         );
     }
 
-    public function create()
+    public function create(): View
     {
         return view('category.form');
     }
 
-    public function view(int $category_id)
+    public function view(int $category_id): View
     {
         $category = Auth::user()
             ->categories
@@ -36,7 +38,7 @@ class CategoryController extends Controller
         );
     }
 
-    public function store(CategoryRequest $request)
+    public function store(CategoryRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -50,7 +52,7 @@ class CategoryController extends Controller
         return redirect(route('category.list'))->with('status', 'Category Saved');
     }
 
-    public function update(int $category_id, CategoryRequest $request)
+    public function update(int $category_id, CategoryRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 

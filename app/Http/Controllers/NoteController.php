@@ -7,11 +7,13 @@ use App\Models\Category;
 use App\Models\Note;
 use App\Models\NoteCategory;
 use App\Models\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class NoteController extends Controller
 {
-    public function overview()
+    public function overview(): View
     {
         return view(
             'note.list',
@@ -21,7 +23,7 @@ class NoteController extends Controller
         );
     }
 
-    public function create()
+    public function create(): View
     {
         return view(
             'note.form',
@@ -31,7 +33,7 @@ class NoteController extends Controller
         );
     }
 
-    public function view(int $note_id)
+    public function view(int $note_id): View
     {
         $user = Auth::user();
         $note = $user->notes()
@@ -48,7 +50,7 @@ class NoteController extends Controller
         );
     }
 
-    public function store(NoteRequest $request)
+    public function store(NoteRequest $request): RedirectResponse
     {
         $validated = $request->validated();
         $categories = $validated['categories'] ?? [];
@@ -66,7 +68,7 @@ class NoteController extends Controller
         return redirect(route('note.list'))->with('status', 'Note Saved');
     }
 
-    public function update(int $note_id, NoteRequest $request)
+    public function update(int $note_id, NoteRequest $request): RedirectResponse
     {
         $validated = $request->validated();
         $categories = $validated['categories'] ?? [];
@@ -86,10 +88,7 @@ class NoteController extends Controller
         return redirect(route('note.list'))->with('status', 'Note Saved');
     }
 
-    /**
-     * @return array
-     */
-    private function getCategoriesArray(User $user, ?Note $note = null)
+    private function getCategoriesArray(User $user, ?Note $note = null): array
     {
         $lazyCollection = $user->categories()->cursor();
         $selected = $note ? $note->categories : collect([]);
@@ -105,7 +104,7 @@ class NoteController extends Controller
         )->toArray();
     }
 
-    private function associateCategories(array $categories, int $note_id)
+    private function associateCategories(array $categories, int $note_id): void
     {
         foreach ($categories as $category_id => $bool)
         {

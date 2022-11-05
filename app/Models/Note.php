@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 /**
@@ -21,10 +22,7 @@ class Note extends Model
 
     protected $guarded = ['id'];
 
-    /**
-     * @return HasManyThrough
-     */
-    public function categories()
+    public function categories(): HasManyThrough
     {
         return $this->hasManyThrough(
             Category::class,
@@ -36,7 +34,7 @@ class Note extends Model
         );
     }
 
-    public function noteCategories()
+    public function noteCategories(): HasMany
     {
         return $this->hasMany(NoteCategory::class);
     }
